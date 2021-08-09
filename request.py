@@ -1,4 +1,5 @@
 from time import sleep
+from pandas.core.frame import DataFrame
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 import pandas as pd
@@ -42,11 +43,16 @@ class Bot():
         sleep(6)
         
         # find image src with loop condition q   
-        imgsrc = self.driver.find_element_by_class_name(name='FFVAD').get_attribute("src")
-        for i in imgsrc:
-            print(i)
+        listOfSrc = []
+        for i in self.driver.find_elements_by_class_name('FFVAD'):
+            listOfSrc.append(i.get_attribute('src'))
+            print(listOfSrc)
+            print('__________________________\n')
+            sleep(0.2)
 
-        
+
+
+
 def main():
     myBot = Bot()
 
