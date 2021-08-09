@@ -4,7 +4,7 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 import pandas as pd
 from info import user, passwd
-
+import time
 
 class Bot():
     def __init__(self):
@@ -42,16 +42,22 @@ class Bot():
         self.driver.get('https://www.instagram.com/explore/tags/btc/')
         sleep(6)
         
-        # find image src with loop condition q   
+        # find image src with loop condition   
         listOfSrc = []
         for i in self.driver.find_elements_by_class_name('FFVAD'):
             listOfSrc.append(i.get_attribute('src'))
             print(listOfSrc)
             print('__________________________\n')
             sleep(0.2)
+            
+            #scroll page for show more post (bypass post lazy loading)
+            self.driver.execute_script("window.scrollBy(0, 250)")
+            time.sleep(0.5)
 
-
-
+        # make dataframe from src tags
+        UrlDF = pd.DataFrame(listOfSrc) 
+        #export src as CSV file for next steps
+        UrlDF.to_csv('url.csv')
 
 def main():
     myBot = Bot()
