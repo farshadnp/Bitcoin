@@ -1,7 +1,7 @@
 from time import sleep
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
-
+import pandas as pd
 from info import user, passwd
 
 
@@ -13,7 +13,7 @@ class Bot():
         self.driver = webdriver.Firefox()
         self.driver.get('https://www.instagram.com/')
 
-        sleep(2)   
+        sleep(10)   
         username_input = self.driver.find_element_by_xpath(
             '/html/body/div[1]/section/main/article/div[2]/div[1]/div/form/div/div[1]/div/label/input')
         username_input.send_keys(username)
@@ -37,17 +37,16 @@ class Bot():
         #self.driver.find_element_by_xpath('/html/body/div[5]/div/div/div/div[3]/button[2]').click()
         #sleep(4)
 
-        self.driver.get('https://www.instagram.com/jpn.bitcoin/')
-        sleep(4)
+    # go to #BTC hashtah with 7billion post over the world
+        self.driver.get('https://www.instagram.com/explore/tags/btc/')
+        sleep(6)
         
-        #post
-        post = self.driver.find_element_by_xpath('/html/body/div[1]/section/main/div/div[3]/article/div[1]/div/div[1]/div[3]/a').click()
+        # find image src with loop condition q   
+        imgsrc = self.driver.find_element_by_class_name(name='FFVAD').get_attribute("src")
+        for i in imgsrc:
+            print(i)
+
         
-        #Full-post
-        full_post = self.driver.find_element_by_xpath('/html/body/div[5]/div[2]/div/article/div[3]/div[1]/ul/div/li/div/div/div[2]/span')
-
-        print(full_post)
-
 def main():
     myBot = Bot()
 
